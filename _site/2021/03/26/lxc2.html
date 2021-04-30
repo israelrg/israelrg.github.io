@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>LXC #2 | Israel Rodriguez</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="LXC #2" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/2021/03/26/lxc2" />
+<meta property="og:url" content="http://localhost:4000/2021/03/26/lxc2" />
+<meta property="og:site_name" content="Israel Rodriguez" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-26T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="LXC #2" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"LXC #2","dateModified":"2021-03-26T00:00:00+01:00","datePublished":"2021-03-26T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/03/26/lxc2"},"url":"http://localhost:4000/2021/03/26/lxc2","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+<meta name="keywords" content="lxc servidores" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" href="/favicon.ico"/>
+<link rel="alternate" type="application/rss+xml" title="Israel Rodriguez - " href="/feed.xml" />
+<link rel="stylesheet" type="text/css" href="/assets/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" />
+
+<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async ></script>
+
+
+<script src="/assets/script/jekyllpaper.js" async ></script>
+<script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js" onload="javascript:loadMermaid();" async></script>
+
+
+</head>
+<body>
+  <div class="container-wrapper">
+    <header class="container-header">
+      <div class="header-info">
+  <span class="header-info-name">Israel Rodriguez</span>
+  <span class="header-info-desc"></span>
+</div>
+<nav class="header-nav">
+  <ul class="header-main-nav">
+  
+    <li class="header-main-nav-item"><a href="/">Índice</a></li>
+  
+    <li class="header-main-nav-item"><a href="/category">Categorías</a></li>
+  
+    <li class="header-main-nav-item"><a href="https://github.com/ghosind/Jekyll-Paper">Jekyll Paper</a></li>
+  
+    <li class="header-main-nav-item"><a href="/about">Sobre</a></li>
+  
+  </ul>
+</nav>
+    </header>
+    <main class="container-main">
+      <article class="container-post">
+  <div class="post-title">
+    <h1>LXC #2</h1>
+  </div>
+  <div class="post-author">
+    <span>Israel Rodriguez</span>
+  </div>
+  <div class="post-content">
+    <p><a><img src="https://i.ibb.co/4T4Z6hW/containers.png" alt="containers" border="0" /></a></p>
+
+<p>Me puse a hacer pruebas y hay que tener cuidado al instalar lxc en linux mint.</p>
+
+<p>Para empezar <code>lxc remote list</code> no funciona solo instalando lxc, sino que tienes tambien que instalar lxd. Por algún motivo solo deja descargarlo con snapd, cosa que viene desactivada por defecto.
+También sera necesario descargar <code>lxc-utils</code>. Todo esto para que no nos de problemas después. 
+Mejor intentarlo en una maquina virtual que en el host. Manejar paquetes de forma erronea puede dar muchos quebraderos de cabeza.</p>
+
+<ul>
+  <li>Crear un contenedor y descargarlo.
+Te va a pedir que tipo de distribucion necesitas etc. Ya te lista el nombre de las opciones, nada complicado. En mi caso ubuntu xenial amd64
+<code>lxc-create -t download -n machine-name</code></li>
+</ul>
+
+<p><a><img src="https://i.ibb.co/MNrXJHt/Screenshot-2021-03-26-16-21-44.png" alt="Screenshot-2021-03-26-16-21-44" border="0" /></a></p>
+
+<ul>
+  <li>
+    <p>Listar los contenedores activos.
+Lo escribimos todo junto.
+<code>lxc-ls</code></p>
+  </li>
+  <li>
+    <p>Ejecutar el contenedor en segundo plano.
+El -d es para dejarlo como servicio en segundo plano
+<code>lxc-start -n machine-name -d</code></p>
+  </li>
+  <li>
+    <p>Ver contenedores activos
+<code>lxc-ls --active</code></p>
+  </li>
+  <li>
+    <p>Accedemos al contenedor
+<code>lxc-attach machine-name</code></p>
+  </li>
+</ul>
+
+<p>Y ya estariamos dentro de nuesto contenedor creado</p>
+
+  </div>
+  <div class="post-info">
+    <div class="post-date">
+      Escrito en 2021-03-26, actualizado en 2021-03-26.
+    </div>
+    <div class="post-categories">
+      <span>Categorías: </span>
+      
+      <a href="/category/lxc" class="post-category">LXC</a>
+      
+    </div>
+    <div class="post-tags">
+      <span>Etiquetas: </span>
+      
+      <a href="/tag/lxc-servidores" class="post-tag">lxc servidores</a>
+      
+    </div>
+    <div class="post-tools">
+      
+      <div>
+        <span>Siguiente: </span><a href="/2021/03/29/ssh-mysql-nginx">ssh, mysql, nginx</a>
+      </div>
+      
+      
+      <div>
+        <span>Anterior: </span><a href="/2021/03/24/lxc1">LXC #1</a>
+      </div>
+      
+    </div>
+    
+  </div>
+</article>
+    </main>
+    <footer class="container-footer">
+      <div class="footer-copyright">
+  <span class="footer-copyright-text float-left">Copyright &copy; 2021. israelrodriguez.xyz.</span>
+  <span class="footer-copyright-text float-right">
+    Powered by <a href="https://jekyllrb.com/">Jekyll</a>, themed by <a href="https://github.com/ghosind/Jekyll-Paper">Jekyll-Paper</a>.
+  </span>
+</div>
+    </footer>
+  </div>
+</body>
+</html>
