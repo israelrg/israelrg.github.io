@@ -1,2 +1,1 @@
-# israelrg.github.io
-Pagina web
+Pagina
