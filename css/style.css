@@ -310,7 +310,7 @@ figure figcaption {
   left: 0;
   right: 0;
   content: '';
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
 }
 #fh5co-hero .flexslider .slides li {
   background-repeat: no-repeat;
@@ -880,7 +880,7 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
 }
 
 .btn-primary {
-  background: #228896;
+  background: red;
   color: #fff;
   border: 2px solid #228896;
 }
