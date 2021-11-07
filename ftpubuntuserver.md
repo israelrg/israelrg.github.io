@@ -36,3 +36,48 @@ Bloquear IP
 	vsftpd: 192.168.1.100
 	vsftpd: 192.168.1.0/255.255.255.0
 
+
+
+
+<html>
+	<head>	
+	</head>
+	<body>
+		<style type ="text/css">
+			table { border: solid 2px black;}
+			td.par {
+				background-color: black;
+				color:white;
+			}
+		</style>
+		<?php
+		$col=16;
+		$fila=8;
+		$num=1;
+		echo "<table>";
+		for($i=1;$i<=$fila;$i++)
+		{
+			echo "<tr >";
+			for($j=1;$j<=$col;$j++)
+			{
+				/*Si 1+1 ES PAR lo pongo en negro*/
+				if(($i+$j)%2==0){
+					
+					/*	echo "<td bgcolor=\"black\" style=\"color:white\">".$num++."</td>";*/
+						echo "<td class=\"par\">".$num++."</td>";
+					
+				}
+				/*Si 1+2 ES IMPAR lo pongo en blanco*/
+				else{
+					
+						echo "<td class =\"impar\">".$num++."</td>";
+			
+				}
+			}
+			echo "<tr>";
+		}
+		echo "</table>";
+		?>
+	</body>
+</html> 
+
