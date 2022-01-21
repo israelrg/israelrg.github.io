@@ -1,0 +1,60 @@
+2) Disable Directory Listing
+
+If your document root directory does not have an index file, by default your apache web server will show all the content of the document root directory.
+
+Apache Tutorials for Beginners
+
+This feature could be turn off for a specific directory through “options directive” available in the Apache configuration file.
+
+<Directory /var/www/html>
+
+    Options -Indexes
+
+</Directory>
+
+Apache Tutorials for Beginners
+3) Disabling unnecessary modules
+
+It is good practice to disable all unnecessary modules that are not in use. You can see list of enabled module available in your apache configuration file –
+
+[root@amsterdam ~]#httpd –M
+
+perl_module (shared)
+
+php5_module (shared)
+
+proxy_ajp_module (shared)
+
+python_module (shared)
+
+ssl_module (shared)
+
+Many of the listed modules can be disabled likemod_imap, mod_include, mod_info, mod_userdir, mod_autoindex, as they are hardly used by any production web servers.
+
+vi /etc/httpd/conf/httpd.conf
+
+#LoadModule auth_digest_module modules/mod_auth_digest.so
+
+Once you commented the module, save the file.
+
+Restart apache services with following command.
+
+/etc/init.d/httpd restart
+
+4) Restricting Access to files outside the web root directory
+
+If you like to make sure that files that is outside the web root directory are not accessible, you have to make sure that the directory is restricted with “Allow” and “Deny option” in your web server configuration file.
+
+<Directory/>
+
+Options None
+
+AllowOverride None
+
+Order deny,allow
+
+Deny from all
+
+</Directory>
+
+Once you restrict acess outside the web root directoy, you will not be able to access any file located on any other folder on your web server, you will get 404 return code.
