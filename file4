@@ -1,0 +1,3 @@
+named-checkconf
+named-checkzone wordpress.edu.ni /var/cache/bind/db.wordpress.edu.ni.zone
+named-checkzone 10.168.192.in-addr.arpa /var/cache/bind/db.192.168.10

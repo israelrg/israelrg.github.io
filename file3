@@ -1,0 +1,14 @@
+$ORIGIN 10.168.192.in-addr.arpa.
+$TTL 86400 ; 1 dia
+@ IN SOA ns.wordpress.edu.ni. info.wordpress.edu.ni. (
+        2020042501 ; serie
+        6H ; refresco (6 horas)
+        1H ; reintentos (1 hora)
+        2W ; expira (2 semanas)
+        3H ; mínimo (3 horas)
+)
+
+@     IN     NS     ns.wordpress.edu.ni.
+12    IN     PTR    ns.wordpress.edu.ni.
+12    IN     PTR    mail.wordpress.edu.ni.
+12    IN     PTR    www.wordpress.edu.ni.
