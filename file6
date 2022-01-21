@@ -1,0 +1,161 @@
+FTP ##############
+Step 1: Update System Packages
+
+Start by updating your repositories – enter the following in a terminal window:
+
+sudo apt update
+
+The system proceeds to update the repositories.
+System Updating Repositories.
+Step 2: Install vsftpd Server on Ubuntu
+
+A common open-source FTP utility used in Ubuntu is vsftpd. It is recommended for its ease of use.
+
+1. To install vsftpd, enter the command:
+
+sudo apt install vsftpd
+
+This is an example of the output in Ubuntu.
+vsftpd installation process.
+
+2. To launch the service and enable it at startup, run the commands:
+
+sudo systemctl start vsftpd
+
+sudo systemctl enable vsftpd
+
+Note: Instruction for setting up and configuring FTP server with vsftpd is also available for CentOS 7 and Rasberry Pi.
+Step 3: Backup Configuration Files
+
+Before making any changes, make sure to back up your configuration files.
+
+1. Create a backup copy of the default configuration file by entering the following:
+
+sudo cp /etc/vsftpd.conf  /etc/vsftpd.conf_default
+
+Step 4: Create FTP User
+
+Create a new FTP user with the following commands:
+
+sudo useradd -m testuser
+
+sudo passwd testuser
+
+The system should ask you to create a password for the new testuser account.
+Step 5: Configure Firewall to Allow FTP Traffic
+
+If you are using UFW that comes standard with Ubuntu, it will block FTP traffic by default. Enter the following commands to open Ports 20 and 21 for FTP traffic:
+
+sudo ufw allow 20/tcp
+
+sudo ufw allow 21/tcp
+
+Configure firewall to allow FTP traffic.
+
+Note: If you are using a different firewall, refer to the instructions to allow access on Port 20 and Port 21. These are the listening ports for the FTP service.
+Step 6: Connect to Ubuntu FTP Server
+
+Connect to the FTP server with the following command:
+
+sudo ftp ubuntu-ftp
+
+Replace ubuntu-ftp with the name of your system (taken from the command line).
+
+Log in using the testuser account and password you just set. You should now be successfully logged in to your FTP server.
+Configuring and Securing Ubuntu vsftpd Server
+Change Default Directory
+
+By default, the FTP server uses the /srv/ftp directory as the default directory. You can change this by creating a new directory and changing the FTP user home directory.
+
+To change the FTP home directory, enter the following:
+
+sudo mkdir /srv/ftp/new_location
+
+sudo usermod -d /srv/ftp/new_location ftp
+
+Restart the vsftpd service to apply the changes:
+
+sudo systemctl restart vsftpd.service
+
+Now, you can put any files you want to share via FTP into the /srv/ftp folder (if you left it as the default), or the /srv/ftp/new_location/ directory (if you changed it).
+Authenticate FTP Users
+
+If you want to let authenticated users upload files, edit the vsftpd.conf file by entering the following:
+
+sudo nano /etc/vsftpd.conf
+
+Find the entry labeled write_enable=NO, and change the value to “YES.”
+Write_Enable option in vsftpd.config file.
+
+Save the file, exit, then restart the FTP service with the following:
+
+sudo systemctl restart vsftpd.service
+
+This allows the user to make changes inside their home directory.
+
+Note: To learn more about using FTP, refer to our in-depth guide on Linux ftp command.
+Securing FTP
+
+Numerous exploits take advantage of unsecured FTP servers. In response, there are several configuration options in vsftpd.conf that can help secure your FTP server.
+Limit User Access
+
+One method is to limit users to their home directory. Open vsftpd.conf in an editor and uncomment the following command:
+
+chroot_local_user=YES
+
+This is an example of the file in nano:
+Command to limit users to their home directory.
+Create a User List File
+
+To create a list file, edit /etc/vsftpd.chroot_list, and add one user per line.
+
+Instruct your FTP server to limit this list of users to their own home directories by editing vsftpd.conf:
+
+chroot_local_user=YES
+
+chroot_list_file=/etc/vsftpd.chroot_list
+
+The image ilustrates the edits that were made:
+Chroot list to limit user access.
+
+Restart the vsftpd service:
+
+sudo systemctl restart vsftpd.service
+
+By default, the list of blocked users from FTP access is stored in /etc/ftpusers. To add blocked users, edit this file and add one user per line.
+Encrypt Traffic With FTPS
+
+Another method to secure your FTP server is to encrypt the traffic. This is done by using FTPS – File Transfer Protocol over SSL (Secure Socket Layer).
+
+For this to work, users need to be set up with a shell account on the FTP server. This will add a layer of secure encryption to your FTP traffic.
+
+1. Start by creating a new certificate with openssl. To do so, run the command:
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+
+2. Provide the required information when prompted or keep the default configuration by pressing Enter.
+
+3. Next, open your vsftpd.conf file in an editor and change the line ssl_enable=NO to ssl_enable=YES:
+
+ssl_enable=YES
+
+4. Then, add the following lines:
+
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/ssl/private/vsftpd.pem
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO
+require_ssl_reuse=NO
+ssl_ciphers=HIGH
+pasv_min_port=40000
+pasv_max_port=50000
+
+5. Save the changes and exit the file.
+
+6. Finally, restart the service to apply the changes:
+
+sudo systemctl restart vsftpd.service
