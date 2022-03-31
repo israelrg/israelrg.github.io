@@ -1,0 +1,21 @@
+sudo apt-get install samba
+sudo systemctl status nmbd
+sudo mkdir /samba
+sudo nano /etc/samba/smb.conf
+
+
+[samba-share]
+comment = Samba on Ubuntu
+path = /samba
+read only = no
+browsable = yes
+
+
+useradd [nombre-usuario]
+smbpasswd -a [nombre-usuario]
+sudo mkdir /samba/public
+sudo chown -R nobody:nogroup /samba/public
+sudo chmod -R 0777 /samba/public
+sudo chgrp sambashare /samba/public
+
+\\ip\samba-share
