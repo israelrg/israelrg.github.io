@@ -1,15 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="es" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title></title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -17,25 +19,29 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,50 +57,81 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="profile.html">Inicio</a></li><li class="chapter-item expanded affix "><li class="part-title">Documentación</li><li class="chapter-item expanded "><a href="kerberossh.html"><strong aria-hidden="true">1.</strong> Kerberos + ssh</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Ingenieria informática</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="INICIO.html">INICIO</a></li><li class="chapter-item expanded affix "><li class="part-title">INFRAESTRUCTURA</li><li class="chapter-item expanded "><a href="INFRAESTRUCTURA/kerberos.html"><strong aria-hidden="true">1.</strong> Configuración de SSH + kerberos</a></li><li class="chapter-item expanded affix "><li class="part-title">ECONÓMICAS</li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -111,6 +148,7 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -124,8 +162,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -136,26 +175,105 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="israel-rodríguez-gallego"><a class="header" href="#israel-rodríguez-gallego">Israel Rodríguez Gallego</a></h1>
-<p>Esta web es una recopilación de información, proyectos e ideas que voy desarrollando. Quizas te pueda servir en algún momento.</p>
-<h3 id="contacto"><a class="header" href="#contacto">Contacto</a></h3>
-<p>📧 Email: israelrodriguez@protonmail.com</p>
-<p>🐱‍👤Github: <a href="https://github.com/israelrg">israelrg</a></p>
-<p>💼 Linkedin: <a href="https://es.linkedin.com/in/israel-rodriguez-gallego-630a5a213">Israel Rodriguez Gallego</a></p>
-<p>‍</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ssh---kerberos"><a class="header" href="#ssh---kerberos">SSH - KERBEROS</a></h1>
-<h3 id="networking"><a class="header" href="#networking">NETWORKING</a></h3>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">megatron.local</th><th style="text-align: left">INTERFACE1</th><th style="text-align: left">IP management</th><th style="text-align: left">INTERFACE2</th><th style="text-align: left">IP2 service</th></tr></thead><tbody>
-<tr><td style="text-align: left">kserver</td><td style="text-align: left">ens18</td><td style="text-align: left">192.168.4.201/24</td><td style="text-align: left">ens19</td><td style="text-align: left">10.0.8.10/24</td></tr>
-<tr><td style="text-align: left">khost1</td><td style="text-align: left">ens18<br /></td><td style="text-align: left">192.168.4.202/24</td><td style="text-align: left">ens19<br /></td><td style="text-align: left">10.0.8.50/24</td></tr>
-<tr><td style="text-align: left">khost2</td><td style="text-align: left">ens18<br /></td><td style="text-align: left">192.168.4.203/24<br /></td><td style="text-align: left">ens19<br /></td><td style="text-align: left">10.0.8.51/24</td></tr>
+<p>Esta web es una recopilación de notas y documentación. Actualmente a fecha de 2024 soy estudiante de ADE (Administración y Dirección de Empresas) y profesionalmente me dedico a administración y arquitectura Cloud tanto pública como privada.</p>
+<p><br/><br/></p>
+<center>
+<div class="spinner">
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</div>
+</center>
+<h2 id="contacto"><a class="header" href="#contacto">Contacto</a></h2>
+<p><a href='https://www.linkedin.com/in/israel-rodriguez-gallego-630a5a213' target="_blank"><img alt='LINKEDIN' src='https://img.shields.io/badge/LINKEDIN-100000?style=for-the-badge&logo=LINKEDIN&logoColor=FFFFFF&labelColor=2041BA&color=black'/></a></p>
+<p><a href="https://www.linkedin.com/in/israel-rodriguez-gallego-630a5a213">https://www.linkedin.com/in/israel-rodriguez-gallego-630a5a213</a></p>
+<p><a href='https://github.com/israelrg' target="_blank"><img alt='GITHUB' src='https://img.shields.io/badge/GITHUB-100000?style=for-the-badge&logo=GITHUB&logoColor=FFFFFF&labelColor=6C2C60&color=black'/></a></p>
+<p><a href="https://github.com/israelrg">https://github.com/israelrg</a></p>
+<p><a href='mailto:israelrodriguez@protonmail.com' target="_blank"><img alt='PROTONMAIL' src='https://img.shields.io/badge/PROTONMAIL-100000?style=for-the-badge&logo=PROTONMAIL&logoColor=FFFFFF&labelColor=4E00AD&color=black'/></a></p>
+<p>israelrodriguez@protonmail.com</p>
+<p><a href='www.israelrodriguez.xyz' target="_blank"><img alt='INERTIA' src='https://img.shields.io/badge/www.israelrodriguez.xyz-100000?style=for-the-badge&logo=INERTIA&logoColor=FFFFFF&labelColor=C71414&color=black'/></a></p>
+<p><a href="www.israelrodriguez.xyz">www.israelrodriguez.xyz</a></p>
+<p><a href='https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0' target="_blank"><img alt='SIGNAL' src='https://img.shields.io/badge/SIGNAL-100000?style=for-the-badge&logo=SIGNAL&logoColor=FFFFFF&labelColor=270A7C&color=black'/></a></p>
+<p><a href="https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0">https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0</a></p>
+<p><a href='https://t.me/Isra_ae' target="_blank"><img alt='TELEGRAM' src='https://img.shields.io/badge/TELEGRAM-100000?style=for-the-badge&logo=TELEGRAM&logoColor=FFFFFF&labelColor=387AE4&color=black'/></a></p>
+<p><a href="https://t.me/Isra_ae">https://t.me/Isra_ae</a></p>
+<style>
+.spinner {
+ width: 44px;
+ height: 44px;
+ animation: spinner-y0fdc1 2s infinite ease;
+ transform-style: preserve-3d;
+}
+
+.spinner > div {
+ background-color: rgba(0,77,255,0.2);
+ height: 100%;
+ position: absolute;
+ width: 100%;
+ border: 2px solid #004dff;
+}
+
+.spinner div:nth-of-type(1) {
+ transform: translateZ(-22px) rotateY(180deg);
+}
+
+.spinner div:nth-of-type(2) {
+ transform: rotateY(-270deg) translateX(50%);
+ transform-origin: top right;
+}
+
+.spinner div:nth-of-type(3) {
+ transform: rotateY(270deg) translateX(-50%);
+ transform-origin: center left;
+}
+
+.spinner div:nth-of-type(4) {
+ transform: rotateX(90deg) translateY(-50%);
+ transform-origin: top center;
+}
+
+.spinner div:nth-of-type(5) {
+ transform: rotateX(-90deg) translateY(50%);
+ transform-origin: bottom center;
+}
+
+.spinner div:nth-of-type(6) {
+ transform: translateZ(22px);
+}
+
+@keyframes spinner-y0fdc1 {
+ 0% {
+  transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+ }
+
+ 50% {
+  transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+ }
+
+ 100% {
+  transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+ }
+}
+
+</style>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuración-de-ssh--kerberos"><a class="header" href="#configuración-de-ssh--kerberos">Configuración de SSH + kerberos</a></h1>
+<h2 id="definición-y-objetivos"><a class="header" href="#definición-y-objetivos">Definición y objetivos</a></h2>
+<h3 id="networking"><a class="header" href="#networking">Networking</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>megatron.local</th><th>INTERFACE1</th><th>IP management</th><th>INTERFACE2</th><th>IP2 service</th></tr></thead><tbody>
+<tr><td>kserver</td><td>ens18</td><td>192.168.4.201/24</td><td>ens19</td><td>10.0.8.10/24</td></tr>
+<tr><td>khost1</td><td>ens18<br /></td><td>192.168.4.202/24</td><td>ens19<br /></td><td>10.0.8.50/24</td></tr>
+<tr><td>khost2</td><td>ens18<br /></td><td>192.168.4.203/24<br /></td><td>ens19<br /></td><td>10.0.8.51/24</td></tr>
 </tbody></table>
 </div>
-<h3 id="esquema"><a class="header" href="#esquema">ESQUEMA</a></h3>
-<p><img src="assets/image-20221028195940-kgnytau.png" alt="image" />​</p>
-<p>‍</p>
-<h3 id="configuracion-krserver"><a class="header" href="#configuracion-krserver">Configuracion krserver</a></h3>
-<p>Al no configurar DNS metemos registros a mano.  /etc/hosts</p>
-<pre><code class="language-bash">127.0.0.1       localhost
+<h3 id="esquema-de-la-arquitectura"><a class="header" href="#esquema-de-la-arquitectura">Esquema de la arquitectura</a></h3>
+<p>​<img src="INFRAESTRUCTURA/assets/image-20240203141253-chw0tv0.png" alt="image" />​</p>
+<h2 id="configuración"><a class="header" href="#configuración">Configuración</a></h2>
+<h3 id="configuracion-krserver"><a class="header" href="#configuracion-krserver"><a href="about:reader?url=https%3A%2F%2Fisraelrodriguez.xyz%2Fkerberossh.html#configuracion-krserver">Configuracion krserver</a></a></h3>
+<p>Insertar registros DNS de forma manual en /etc/hosts</p>
+<pre><code>127.0.0.1       localhost
 127.0.1.1       kserver.megatron.local  kserver
 
 # KERBEROS
@@ -163,41 +281,41 @@
 10.0.8.50       khost1.megatron.local
 10.0.8.51       khost2.megatron.local
 </code></pre>
-<p>Instalar paquetes </p>
-<pre><code class="language-bash">apt install krb5-kdc krb5-admin-server
+<p>Instalar paquetes</p>
+<pre><code>apt install krb5-kdc krb5-admin-server
 </code></pre>
 <p>Configurar datos de entrada para el servidor del reino y el dominio del servidor</p>
-<pre><code class="language-bash">Reino: MEGATRON.LOCAL
+<pre><code>Reino: MEGATRON.LOCAL
 Ser. Kerberos: krserver.megatron.local
 Serv. Admin Kerberos: krserver.megatron.local
 </code></pre>
 <p>Desactivar Ks4 /etc/default/krb5-kdc. Añadir</p>
-<pre><code class="language-bash">KRB4_MODE=disable
+<pre><code>KRB4_MODE=disable
 RUN_KRB524D=false
 </code></pre>
 <p>Añdir en /etc/krb5.conf. El resto de realms configurados por defecto se pueden borrar</p>
-<pre><code class="language-bash">[domain_realm]
+<pre><code>[domain_realm]
         .megatron.local = MEGATRON.LOCAL
         megatron.local = MEGATRON.LOCAL
 </code></pre>
 <p>Definir nuevo realm y reiniciar servicios. Importante agregar contraseña</p>
-<pre><code class="language-bash">krb5_newrealm
+<pre><code>krb5_newrealm
 systemctl start krb5-admin-server
 systemctl start krb5-kdc
 </code></pre>
 <p>Acceder a la consola de kerberos. Nos pide contraseña root realm</p>
-<pre><code class="language-bash">kadmin.local
+<pre><code>kadmin.local
 </code></pre>
 <p>Crear usuario y agregarlo como administrador. Nos pide contraseña para el usuario</p>
-<pre><code class="language-bash">kadmin.local: add_principal israel@MEGATRON.LOCAL
+<pre><code>kadmin.local: add_principal israel@MEGATRON.LOCAL
 kadmin.local: add_principal israel/admin@MEGATRON.LOCAL
 </code></pre>
 <p>Habilitamos usuarios administradores descomentado la linea en /etc/krb5kdc/kadm5.acl</p>
-<pre><code class="language-bash">*/admin *
+<pre><code>*/admin *
 </code></pre>
-<h3 id="configurar-los-clientes-de-kerberos-khost1-khost2"><a class="header" href="#configurar-los-clientes-de-kerberos-khost1-khost2">Configurar los clientes de KERBEROS (KHOST1 KHOST2)</a></h3>
+<h3 id="configurar-los-clientes-de-kerberos-khost1-khost2"><a class="header" href="#configurar-los-clientes-de-kerberos-khost1-khost2"><a href="about:reader?url=https%3A%2F%2Fisraelrodriguez.xyz%2Fkerberossh.html#configurar-los-clientes-de-kerberos-khost1-khost2">Configurar los clientes de KERBEROS (KHOST1 KHOST2)</a></a></h3>
 <p>Al no configurar DNS metemos registros a mano.  /etc/hosts</p>
-<pre><code class="language-bash">127.0.0.1       localhost
+<pre><code>127.0.0.1       localhost
 127.0.1.1       khost2.megatron.local   khost2
 
 # KERBEROS
@@ -206,19 +324,19 @@ kadmin.local: add_principal israel/admin@MEGATRON.LOCAL
 10.0.8.51       khost2.megatron.local
 </code></pre>
 <p>Instalar paquetes y configurar</p>
-<pre><code class="language-bash">apt-get install krb5-user krb5-config
+<pre><code>apt-get install krb5-user krb5-config
 
-	Reino: MEGATRON.LOCAL
-	Ser. Kerberos: krserver.megatron.local
-	Serv. Admin Kerberos: krserver.megatron.local
+    Reino: MEGATRON.LOCAL
+    Ser. Kerberos: krserver.megatron.local
+    Serv. Admin Kerberos: krserver.megatron.local
 </code></pre>
 <p>Añdir en /etc/krb5.conf. El resto de realms configurados por defecto se pueden borrar</p>
-<pre><code class="language-bash">[domain_realm]
+<pre><code>[domain_realm]
         .megatron.local = MEGATRON.LOCAL
         megatron.local = MEGATRON.LOCAL
 </code></pre>
 <p>Compobamos que obtenemo ticket de krserver. Nos pide contraseña de usuarios</p>
-<pre><code class="language-bash">x@khost2:~$ kinit israel
+<pre><code>x@khost2:~$ kinit israel
 Password for israel@MEGATRON.LOCAL:
 x@khost2:~$ klist
 Ticket cache: FILE:/tmp/krb5cc_1000
@@ -229,38 +347,38 @@ Valid starting       Expires              Service principal
         renew until 10/29/2022 15:01:39
 x@khost2:~$
 </code></pre>
-<h3 id="configurar-servidor-ssh-khost2"><a class="header" href="#configurar-servidor-ssh-khost2">Configurar servidor ssh (KHOST2)</a></h3>
-<p>En el servidor <u>krserver </u>generamos y exportamos las claves del servidor ssh khost2</p>
-<pre><code class="language-bash">kadmin.local
+<h3 id="configurar-servidor-ssh-khost2"><a class="header" href="#configurar-servidor-ssh-khost2"><a href="about:reader?url=https%3A%2F%2Fisraelrodriguez.xyz%2Fkerberossh.html#configurar-servidor-ssh-khost2">Configurar servidor ssh (KHOST2)</a></a></h3>
+<p>En el servidor krserver generamos y exportamos las claves del servidor ssh khost2</p>
+<pre><code>kadmin.local
 kadmin.local: add_principal -randkey host/khost2.megatron.local@MEGATRON.LOCAL
 kadmin.local: ktadd host/israel.megatron.local
 kadmin.local: ktadd -k /tmp/khost2.keytab host/khost2.megatron.local@MEGATRON.LOCAL
 </code></pre>
 <p>Le eviamos la clave generada a khost2</p>
-<pre><code class="language-bash">scp /tmp/khost2.keytab x@khost2.megatron.local:/home/x
+<pre><code>scp /tmp/khost2.keytab x@khost2.megatron.local:/home/x
 </code></pre>
-<p>En el servidor ssh khost2 movemos las claves a /etc y damos permisos </p>
-<pre><code class="language-bash">chmod 400 /etc/khost2.keytab
+<p>En el servidor ssh khost2 movemos las claves a /etc y damos permisos</p>
+<pre><code>chmod 400 /etc/khost2.keytab
 chown sshd:ssh /etc/khost2.keytab
 </code></pre>
 <p>Activar en /etc/ssh/sshd_config</p>
-<pre><code class="language-bash"># GSSAPI options
+<pre><code># GSSAPI options
 GSSAPIAuthentication yes
 GSSAPICleanupCredentials yes
 </code></pre>
 <p>Reiniciar daemon ssd</p>
-<pre><code class="language-bash">systemctl restart sshd
+<pre><code>systemctl restart sshd
 </code></pre>
-<h3 id="configurar-cliente-ssh-khost1"><a class="header" href="#configurar-cliente-ssh-khost1">Configurar cliente ssh (KHOST1)</a></h3>
+<h3 id="configurar-cliente-ssh-khost1"><a class="header" href="#configurar-cliente-ssh-khost1"><a href="about:reader?url=https%3A%2F%2Fisraelrodriguez.xyz%2Fkerberossh.html#configurar-cliente-ssh-khost1">Configurar cliente ssh (KHOST1)</a></a></h3>
 <p>Editar /etc/ssh/ssh_config</p>
-<pre><code class="language-bash">GSSAPIAuthentication yes
+<pre><code>GSSAPIAuthentication yes
 GSSAPIDelegateCredentials yes
 </code></pre>
-<pre><code class="language-bash">systemctl restart ssh
+<pre><code>systemctl restart ssh
 </code></pre>
-<p>Obtener ticket con el usuario </p>
+<p>Obtener ticket con el usuario</p>
 <blockquote>
-<pre><code class="language-bash">x@khost2:~$ kinit israel
+<pre><code>x@khost2:~$ kinit israel
 Password for israel@MEGATRON.LOCAL:
 x@khost2:~$ klist
 Ticket cache: FILE:/tmp/krb5cc_1000
@@ -273,7 +391,7 @@ x@khost2:~$
 </code></pre>
 </blockquote>
 <p>Ya nos podemos loggear al el servidor ssh (khost2) desde khost1</p>
-<pre><code class="language-bash">x@khost1:~$ ssh -v israel@khost2.megatron.local
+<pre><code>x@khost1:~$ ssh -v israel@khost2.megatron.local
 OpenSSH_8.4p1 Debian-5+deb11u1, OpenSSL 1.1.1n  15 Mar 2022
 debug1: Reading configuration data /etc/ssh/ssh_config
 debug1: /etc/ssh/ssh_config line 19: include /etc/ssh/ssh_config.d/*.conf matched no files
@@ -349,37 +467,64 @@ Web console: https://khost2.megatron.local:9090/ or https://192.168.4.203:9090/
 Last login: Fri Oct 28 14:09:35 2022 from 10.0.8.50
 israel@khost2:~$
 </code></pre>
-<p>‍</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
             </nav>
 
         </div>
 
-        <script type="text/javascript">
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript">
+
+        <script>
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
+
+    </div>
     </body>
 </html>
