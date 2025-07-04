@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
-<html lang="es" class="light" dir="ltr">
+<html lang="es" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>INICIO</title>
+        <title>Inicio</title>
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
@@ -24,26 +24,40 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
 
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -57,24 +71,22 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
+            html.classList.add("js");
         </script>
 
         <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var body = document.querySelector('body');
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -82,45 +94,25 @@
                 sidebar = 'hidden';
             }
             sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="INICIO.html" class="active">INICIO</a></li><li class="chapter-item expanded affix "><li class="part-title">INFRAESTRUCTURA</li><li class="chapter-item expanded "><a href="INFRAESTRUCTURA/kerberos.html"><strong aria-hidden="true">1.</strong> Configuración de SSH + kerberos</a></li><li class="chapter-item expanded affix "><li class="part-title">ECONÓMICAS</li></ol>
-            </div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
-
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -130,13 +122,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <!--<li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>-->
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <!--<li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>-->
+                            <!--<li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>-->
+                            <!--<li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>-->
+                            <!--<li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>-->
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -174,7 +167,35 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="israel-rodríguez-gallego"><a class="header" href="#israel-rodríguez-gallego">Israel Rodríguez Gallego</a></h1>
-<p>Esta web es una recopilación de notas y documentación. Actualmente a fecha de 2024 soy estudiante de ADE (Administración y Dirección de Empresas) y profesionalmente me dedico a administración y arquitectura Cloud tanto pública como privada.</p>
+<p><a href='https://www.linkedin.com/in/israel-rodríguez-gallego-630a5a213' target="_blank"><img alt='LINKEDIN' src='https://img.shields.io/badge/LINKEDIN-100000?style=for-the-badge&logo=data:image/svg%2bxml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8
+IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNW
+RyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgi
+IHZpZXdCb3g9IjAgMCAyMCAyMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5v
+cmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4N
+CiAgICANCiAgICA8dGl0bGU+bGlua2VkaW4gWyMxNjFdPC90aXRsZT4NCiAgICA8ZGVzYz5DcmVh
+dGVkIHdpdGggU2tldGNoLjwvZGVzYz4NCiAgICA8ZGVmcz4NCg0KPC9kZWZzPg0KICAgIDxnIGlk
+PSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxs
+LXJ1bGU9ImV2ZW5vZGQiPg0KICAgICAgICA8ZyBpZD0iRHJpYmJibGUtTGlnaHQtUHJldmlldyIg
+dHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4MC4wMDAwMDAsIC03NDc5LjAwMDAwMCkiIGZpbGw9IiMw
+MDAwMDAiPg0KICAgICAgICAgICAgPGcgaWQ9Imljb25zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1
+Ni4wMDAwMDAsIDE2MC4wMDAwMDApIj4NCiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMTQ0LDcz
+MzkgTDE0MCw3MzM5IEwxNDAsNzMzMi4wMDEgQzE0MCw3MzMwLjA4MSAxMzkuMTUzLDczMjkuMDEg
+MTM3LjYzNCw3MzI5LjAxIEMxMzUuOTgxLDczMjkuMDEgMTM1LDczMzAuMTI2IDEzNSw3MzMyLjAw
+MSBMMTM1LDczMzkgTDEzMSw3MzM5IEwxMzEsNzMyNiBMMTM1LDczMjYgTDEzNSw3MzI3LjQ2MiBD
+MTM1LDczMjcuNDYyIDEzNi4yNTUsNzMyNS4yNiAxMzkuMDgzLDczMjUuMjYgQzE0MS45MTIsNzMy
+NS4yNiAxNDQsNzMyNi45ODYgMTQ0LDczMzAuNTU4IEwxNDQsNzMzOSBMMTQ0LDczMzkgWiBNMTI2
+LjQ0Miw3MzIzLjkyMSBDMTI1LjA5Myw3MzIzLjkyMSAxMjQsNzMyMi44MTkgMTI0LDczMjEuNDYg
+QzEyNCw3MzIwLjEwMiAxMjUuMDkzLDczMTkgMTI2LjQ0Miw3MzE5IEMxMjcuNzksNzMxOSAxMjgu
+ODgzLDczMjAuMTAyIDEyOC44ODMsNzMyMS40NiBDMTI4Ljg4NCw3MzIyLjgxOSAxMjcuNzksNzMy
+My45MjEgMTI2LjQ0Miw3MzIzLjkyMSBMMTI2LjQ0Miw3MzIzLjkyMSBaIE0xMjQsNzMzOSBMMTI5
+LDczMzkgTDEyOSw3MzI2IEwxMjQsNzMyNiBMMTI0LDczMzkgWiIgaWQ9ImxpbmtlZGluLVsjMTYx
+XSI+DQoNCjwvcGF0aD4NCiAgICAgICAgICAgIDwvZz4NCiAgICAgICAgPC9nPg0KICAgIDwvZz4N
+Cjwvc3ZnPg==&logoColor=FFFFFF&labelColor=ffb454&color=ffb454'/></a></p>
+<p><a href='https://github.com/israelrg' target="_blank"><img alt='GITHUB' src='https://img.shields.io/badge/GITHUB-100000?style=for-the-badge&logo=GITHUB&logoColor=000000&labelColor=ffb454&color=ffb454'/></a></p>
+<p><a href='mailto:israelrodriguez@protonmail.com' target="_blank"><img alt='PROTONMAIL' src='https://img.shields.io/badge/PROTONMAIL-100000?style=for-the-badge&logo=PROTONMAIL&logoColor=000000&labelColor=ffb454&color=ffb454'/></a></p>
+<p><a href='https://www.israelrodriguez.xyz' target="_blank"><img alt='INERTIA' src='https://img.shields.io/badge/www.israelrodriguez.xyz-100000?style=for-the-badge&logo=INERTIA&logoColor=000000&labelColor=ffb454&color=ffb454'/></a></p>
+<p><a href='https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0' target="_blank"><img alt='SIGNAL' src='https://img.shields.io/badge/SIGNAL-100000?style=for-the-badge&logo=SIGNAL&logoColor=000000&labelColor=ffb454&color=ffb454'/></a></p>
+<p><a href='https://t.me/Isra_ae' target="_blank"><img alt='TELEGRAM' src='https://img.shields.io/badge/TELEGRAM-100000?style=for-the-badge&logo=TELEGRAM&logoColor=000000&labelColor=ffb454&color=ffb454'/></a></p>
 <p><br/><br/></p>
 <center>
 <div class="spinner">
@@ -186,19 +207,6 @@
 <div></div>
 </div>
 </center>
-<h2 id="contacto"><a class="header" href="#contacto">Contacto</a></h2>
-<p><a href='https://www.linkedin.com/in/israel-rodriguez-gallego-630a5a213' target="_blank"><img alt='LINKEDIN' src='https://img.shields.io/badge/LINKEDIN-100000?style=for-the-badge&logo=LINKEDIN&logoColor=FFFFFF&labelColor=2041BA&color=black'/></a></p>
-<p><a href="https://www.linkedin.com/in/israel-rodriguez-gallego-630a5a213">https://www.linkedin.com/in/israel-rodriguez-gallego-630a5a213</a></p>
-<p><a href='https://github.com/israelrg' target="_blank"><img alt='GITHUB' src='https://img.shields.io/badge/GITHUB-100000?style=for-the-badge&logo=GITHUB&logoColor=FFFFFF&labelColor=6C2C60&color=black'/></a></p>
-<p><a href="https://github.com/israelrg">https://github.com/israelrg</a></p>
-<p><a href='mailto:israelrodriguez@protonmail.com' target="_blank"><img alt='PROTONMAIL' src='https://img.shields.io/badge/PROTONMAIL-100000?style=for-the-badge&logo=PROTONMAIL&logoColor=FFFFFF&labelColor=4E00AD&color=black'/></a></p>
-<p>israelrodriguez@protonmail.com</p>
-<p><a href='www.israelrodriguez.xyz' target="_blank"><img alt='INERTIA' src='https://img.shields.io/badge/www.israelrodriguez.xyz-100000?style=for-the-badge&logo=INERTIA&logoColor=FFFFFF&labelColor=C71414&color=black'/></a></p>
-<p><a href="www.israelrodriguez.xyz">www.israelrodriguez.xyz</a></p>
-<p><a href='https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0' target="_blank"><img alt='SIGNAL' src='https://img.shields.io/badge/SIGNAL-100000?style=for-the-badge&logo=SIGNAL&logoColor=FFFFFF&labelColor=270A7C&color=black'/></a></p>
-<p><a href="https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0">https://signal.me/#eu/rJBvRORypOyVBgWwr8E8IHJaLhksPFGGwpvGBQQeZDEbGaARCFpMsrMlAd3YJmH0</a></p>
-<p><a href='https://t.me/Isra_ae' target="_blank"><img alt='TELEGRAM' src='https://img.shields.io/badge/TELEGRAM-100000?style=for-the-badge&logo=TELEGRAM&logoColor=FFFFFF&labelColor=387AE4&color=black'/></a></p>
-<p><a href="https://t.me/Isra_ae">https://t.me/Isra_ae</a></p>
 <style>
 .spinner {
  width: 44px;
@@ -208,11 +216,11 @@
 }
 
 .spinner > div {
- background-color: rgba(0,77,255,0.2);
+ background-color: #000000;
  height: 100%;
  position: absolute;
  width: 100%;
- border: 2px solid #004dff;
+ border: 2px solid #ffb454;
 }
 
 .spinner div:nth-of-type(1) {
@@ -264,7 +272,7 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="INFRAESTRUCTURA/kerberos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Certificaciones.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -275,7 +283,7 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="INFRAESTRUCTURA/kerberos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Certificaciones.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
