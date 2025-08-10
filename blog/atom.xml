@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://www.israelrodriguez.xyz/blog</id>
+    <title>israelrodriguez.xyz Blog</title>
+    <updated>2025-08-10T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://www.israelrodriguez.xyz/blog"/>
+    <subtitle>israelrodriguez.xyz Blog</subtitle>
+    <icon>https://www.israelrodriguez.xyz/img/favicon.png</icon>
+    <entry>
+        <title type="html"><![CDATA[Inicio de la Web]]></title>
+        <id>https://www.israelrodriguez.xyz/blog/Inicio de la Web</id>
+        <link href="https://www.israelrodriguez.xyz/blog/Inicio de la Web"/>
+        <updated>2025-08-10T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Esta entrada de blog marca el inicio de la web. Aunque no estoy seguro de si publicaré contenido en esta sección, la dejaré abierta por si decido utilizarla en el futuro.]]></summary>
+        <content type="html"><![CDATA[<p>Esta entrada de blog marca el inicio de la web. Aunque no estoy seguro de si publicaré contenido en esta sección, la dejaré abierta por si decido utilizarla en el futuro.</p>]]></content>
+        <author>
+            <name>Israel Rodríguez</name>
+            <uri>https://www.israelrodriguez.xyz</uri>
+        </author>
+    </entry>
+</feed>
