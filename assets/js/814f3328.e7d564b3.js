@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Inicio de la Web","permalink":"/blog/Inicio de la Web","unlisted":false,"date":"2025-08-10T00:00:00.000Z"}]}')}}]);

@@ -4,10 +4,18 @@
         <title>israelrodriguez.xyz Blog</title>
         <link>https://www.israelrodriguez.xyz/blog</link>
         <description>israelrodriguez.xyz Blog</description>
-        <lastBuildDate>Sun, 10 Aug 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 13 Aug 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Nuevo documento "configuración de HA en RH10"]]></title>
+            <link>https://www.israelrodriguez.xyz/blog/Nuevo documento</link>
+            <guid>https://www.israelrodriguez.xyz/blog/Nuevo documento</guid>
+            <pubDate>Wed, 13 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[He subido un nuevo documento con las instrucciones para la instalación de un Cluster con pacemaker y corosync en Redhat10]]></description>
+            <content:encoded><![CDATA[<p>He subido un nuevo documento con las instrucciones para la instalación de un Cluster con pacemaker y corosync en Redhat10</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Inicio de la Web]]></title>
             <link>https://www.israelrodriguez.xyz/blog/Inicio de la Web</link>
