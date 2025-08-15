@@ -9,8 +9,8 @@
     <icon>https://www.israelrodriguez.xyz/img/favicon.png</icon>
     <entry>
         <title type="html"><![CDATA[Nuevo documento "configuración de HA en RH10"]]></title>
-        <id>https://www.israelrodriguez.xyz/blog/Nuevo documento</id>
-        <link href="https://www.israelrodriguez.xyz/blog/Nuevo documento"/>
+        <id>https://www.israelrodriguez.xyz/blog/Nuevo documento ha instalacion rh10</id>
+        <link href="https://www.israelrodriguez.xyz/blog/Nuevo documento ha instalacion rh10"/>
         <updated>2025-08-13T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[He subido un nuevo documento con las instrucciones para la instalación de un Cluster con pacemaker y corosync en Redhat10]]></summary>
         <content type="html"><![CDATA[<p>He subido un nuevo documento con las instrucciones para la instalación de un Cluster con pacemaker y corosync en Redhat10</p>]]></content>

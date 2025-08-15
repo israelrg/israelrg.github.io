@@ -10,8 +10,8 @@
         <language>en</language>
         <item>
             <title><![CDATA[Nuevo documento "configuración de HA en RH10"]]></title>
-            <link>https://www.israelrodriguez.xyz/blog/Nuevo documento</link>
-            <guid>https://www.israelrodriguez.xyz/blog/Nuevo documento</guid>
+            <link>https://www.israelrodriguez.xyz/blog/Nuevo documento ha instalacion rh10</link>
+            <guid>https://www.israelrodriguez.xyz/blog/Nuevo documento ha instalacion rh10</guid>
             <pubDate>Wed, 13 Aug 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[He subido un nuevo documento con las instrucciones para la instalación de un Cluster con pacemaker y corosync en Redhat10]]></description>
             <content:encoded><![CDATA[<p>He subido un nuevo documento con las instrucciones para la instalación de un Cluster con pacemaker y corosync en Redhat10</p>]]></content:encoded>
